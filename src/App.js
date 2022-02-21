@@ -1,11 +1,18 @@
 import { useState } from 'react'
 import StartScreen from './components/StartScreen'
+import Question from './components/Question'
 
 const App = () => {
-  const [isStarted, setIsStarted] = useState(false)
+  const [isStarted, setStart] = useState(true)
+
+  const startGame = () => {
+    setStart(true)
+  }
+
   return (
     <main className="container">
-      <StartScreen />
+      { !isStarted && <StartScreen handleClick={startGame} /> }
+      { isStarted && <Question /> }
     </main>
   )
 }
