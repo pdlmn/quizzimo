@@ -3,17 +3,15 @@ const Question = ({ question }) => {
   return (
     <div>
       <h2>How much dollars in hryvna?</h2>
-      <div>
-        <label htmlFor="question1">A lot</label>
-        <input id="question1" name="question1" type="radio" />
-      </div>
-      <div>
-        <label htmlFor="question2">Very little</label>
-        <input id="question2" name="question2" type="radio" />
-      </div>
-      <div>
-        <label htmlFor="question3">None</label>
-        <input id="question3" name="question3" type="radio" />
+      <div className="answers">
+        <input id="answer1-1" name="question1" type="radio" />
+        <label htmlFor="answer1-1">A lot</label>
+
+        <input id="answer1-2" name="question1" type="radio" />
+        <label htmlFor="answer1-2">Very little</label>
+
+        <input id="answer1-3" name="question1" type="radio" />
+        <label htmlFor="answer1-3">None</label>
       </div>
     </div>
   )
