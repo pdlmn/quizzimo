@@ -11,14 +11,20 @@ const Question = ({
 }) => {
   const answerElements = answers.map((ans, i) => {
     const id = `${name}-${i}`
+
     const isCorrect = ans === correctAnswer
     const isChecked = ans === selectedAnswer
-    const colorCorrect = (isCorrect && "rgba(130, 250, 130, .7)")
+
+    const colorCorrect = (isCorrect && "rgba(200, 230, 130, .7)")
     const colorCorrectSelected = (isCorrect && isChecked && "rgba(130, 250, 130, .9)")
-    const colorIncorrect = (!isCorrect && isChecked && "rgba(250, 130, 130, .7)")
+    const colorIncorrect = (!isCorrect && isChecked && "rgba(250, 150, 150, .7)")
+    console.log(ans)
+    console.log(correctAnswer)
+
     const styles = {
-      background: (colorIncorrect || colorCorrectSelected || colorCorrect)
+      background: (colorIncorrect || colorCorrectSelected || colorCorrect),
     }
+
     if (isCorrect) console.log(styles)
     return (
       <div key={uniqid()}>
@@ -27,7 +33,7 @@ const Question = ({
           id={id} 
           name={name} 
           value={ans}
-          onChange={handleChange} 
+          onChange={!isEnded && handleChange} 
           checked={isChecked}
         />
         <label 

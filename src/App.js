@@ -39,7 +39,7 @@ const App = () => {
         name,
         questionText: he.decode(question),
         answers,
-        correctAnswer: correct_answer
+        correctAnswer: he.decode(correct_answer)
       }
     })}
 
@@ -93,13 +93,13 @@ const App = () => {
     else {
       return (
         <div className="btn-container">
+          <p className="result">You answered correctly {countCorrectAnswers()}/5 questions</p>
           <button 
             className="btn" 
             onClick={restartGame}
           >
             Play again
           </button>
-          <p className="result">You answered correctly {countCorrectAnswers()}/5 questions</p>
         </div>
       )}
   }
