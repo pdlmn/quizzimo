@@ -96,3 +96,9 @@ h2 {
 .result {
   font-weight: bold;
 }
+
+@media (max-width: 450px) {
+  body {
+    font-size: 14px;
+  }
+}

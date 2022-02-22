@@ -6,7 +6,7 @@ import Question from './components/Question'
 import EndgameButton from './components/EndgameButton'
 
 const App = () => {
-  const [isStarted, setStart] = useState(true)
+  const [isStarted, setStart] = useState(false)
   const [isEnded, setEnd] = useState(false)
   const [restartCount, setRestartCount] = useState(0)
   const [questions, setQuestions] = useState([])
@@ -85,7 +85,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    fetch('https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple')
+    fetch('https://opentdb.com/api.php?amount=5&category=17&type=multiple')
       .then(res => res.json())
       .then(json => setQuestions(createQuestions(json.results)))
   }, [restartCount])
