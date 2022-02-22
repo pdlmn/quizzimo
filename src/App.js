@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import uniqid from 'uniqid'
+import he from 'he' // decodes html entities like &#60;
 import StartScreen from './components/StartScreen'
 import Question from './components/Question'
 
@@ -19,14 +20,15 @@ const App = () => {
   }
 
   const createQuestions = () => 
-    questions.map((questionObj) => {
+    questions.map((questionObj, i) => {
       const {question, correct_answer, incorrect_answers} = questionObj
       const answers = mixAnswers(correct_answer, incorrect_answers)
       return (
         <Question 
           key={uniqid()}
-          question={question}
-          answers={answers}
+          question={he.decode(question)}
+          number={i}
+          answers={answers.map(ans => he.decode(ans))}
         />
       )
     })
