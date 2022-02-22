@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/quizzimo/static/css/main.657808f5.css",
+    "main.js": "/quizzimo/static/js/main.1d80df8a.js",
+    "index.html": "/quizzimo/index.html",
+    "main.657808f5.css.map": "/quizzimo/static/css/main.657808f5.css.map",
+    "main.1d80df8a.js.map": "/quizzimo/static/js/main.1d80df8a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.657808f5.css",
+    "static/js/main.1d80df8a.js"
+  ]
+}
