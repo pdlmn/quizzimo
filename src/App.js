@@ -6,11 +6,21 @@ import Question from './components/Question'
 
 const App = () => {
   const [isStarted, setStart] = useState(true)
+  const [isEnded, setEnd] = useState(false)
   const [questions, setQuestions] = useState([])
+  const [selectedAnswers, setSelectedAnswers] = useState({
+    question0: "",
+    question1: "",
+    question2: "",
+    question3: "",
+    question4: ""
+  })
 
-  const startGame = () => {
-    setStart(true)
-  }
+  const startGame = () => { setStart(true) }
+
+  const endGame = () => { setEnd(true) }
+
+  const restartGame = () => { setEnd(false) }
 
   const mixAnswers = (corrAnswer, incorrAnswers) => {
     const randomSpot = Math.floor(Math.random() * questions.length)
@@ -19,32 +29,57 @@ const App = () => {
     return answers
   }
 
-  const createQuestions = () => 
-    questions.map((questionObj, i) => {
+  const createQuestions = (questionsData) => { 
+    return questionsData.map((questionObj, i) => {
       const {question, correct_answer, incorrect_answers} = questionObj
       const answers = mixAnswers(correct_answer, incorrect_answers)
-      return (
-        <Question 
-          key={uniqid()}
-          question={he.decode(question)}
-          number={i}
-          answers={answers.map(ans => he.decode(ans))}
-        />
-      )
-    })
+      const name = `question${i}`
+      return {
+        id: uniqid(),
+        name,
+        questionText: he.decode(question),
+        answers,
+        correctAnswer: correct_answer
+      }
+    })}
 
-  createQuestions()
+  const handleAnswerSelection = (e) => {
+    const {name, value} = e.target
+    setSelectedAnswers(prevSelectedAnswers => ({
+      ...prevSelectedAnswers,
+      [name]: value
+    }))
+  }
+
+  const questionElements = questions.map(question => {
+    const {id, name, questionText, answers, correctAnswer} = question
+    return (
+      <Question 
+        key={id}
+        name={name}
+        questionText={questionText}
+        answers={answers}
+        correctAnswer={correctAnswer}
+        handleChange={handleAnswerSelection}
+        selectedAnswer={selectedAnswers[name]}
+      />
+  )})
 
   useEffect(() => {
     fetch('https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple')
       .then(res => res.json())
-      .then(json => setQuestions(json.results))
+      .then(json => setQuestions(createQuestions(json.results)))
   }, [])
+  console.log(questions)
+
+  const buttonText = isEnded ? "Play again" : "Check answers"
+  const buttonFunc = isEnded ? restartGame : endGame
 
   return (
     <main className="container">
       { !isStarted && <StartScreen handleClick={startGame} /> }
-      { isStarted && createQuestions() }
+      { isStarted && questionElements }
+      { isStarted && <button className="btn" onClick={buttonFunc}>{ buttonText }</button> }
     </main>
   )
 }

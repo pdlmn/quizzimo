@@ -17,6 +17,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
 }
 
 .start-screen h1 {
@@ -28,7 +29,8 @@ body {
   font-size: 1.5rem;
 }
 
-.start-screen button {
+.start-screen button,
+.btn {
   font-size: 1.5rem;
   border: none;
   border-radius: 5px;
@@ -39,7 +41,8 @@ body {
   cursor: pointer;
 }
 
-.start-screen button:hover {
+.start-screen button:hover,
+.btn:hover {
   background-color: rgb(70, 150, 240);
 }
 
@@ -71,4 +74,9 @@ body {
 .answers input:checked + label {
   background: rgb(90, 170, 250);
   border: 2px solid rgb(90, 170, 250);
+}
+
+.btn {
+  padding: .5rem 1.5rem;
+  font-size: 1.25rem;
 }

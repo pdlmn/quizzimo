@@ -1,20 +1,28 @@
 import uniqid from 'uniqid'
 
-const Question = ({ question, number, answers }) => {
+const Question = ({ name, questionText, answers, correctAnswer, handleChange, selectedAnswer }) => {
   const answerElements = answers.map((ans, i) => {
-    const id = `answer${number}-${i}`
-    const name = `question${number}`
+    const id = `${name}-${i}`
     return (
       <div key={uniqid()}>
-        <input id={id} name={name} type="radio" />
-        <label htmlFor={id}>{ans}</label>
+        <input 
+          type="radio" 
+          id={id} 
+          name={name} 
+          value={ans}
+          onChange={handleChange} 
+          checked={ans === selectedAnswer}
+        />
+        <label htmlFor={id}>
+          {ans}
+        </label>
       </div>
     )
   })
   
   return (
     <div>
-      <h2>{question}</h2>
+      <h2>{questionText}</h2>
       <div className="answers">
         {answerElements}
       </div>
