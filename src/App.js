@@ -100,7 +100,7 @@ const App = () => {
           handleRestart={restartGame}
           correctAnswers={countCorrectAnswers()}
           isEnded={isEnded}
-        /> }
+          /> }
     </main>
   )
 }
