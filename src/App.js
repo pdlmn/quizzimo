@@ -58,12 +58,50 @@ const App = () => {
         key={id}
         name={name}
         questionText={questionText}
-        answers={answers}
+        answers={answers.map(ans => he.decode(ans))}
         correctAnswer={correctAnswer}
         handleChange={handleAnswerSelection}
         selectedAnswer={selectedAnswers[name]}
       />
   )})
+
+  const countCorrectAnswers = () => {
+    const correctAnswers = questions.map(question => question.correctAnswer)
+    const playerAnswers = Object.values(selectedAnswers)
+    let correctAnswersCount = 0
+    for (let i = 0; i < correctAnswers.length; i++) {
+      if (correctAnswers.includes(playerAnswers[i])) {
+        correctAnswersCount++
+      }
+    }
+    return correctAnswersCount
+  }
+
+  const renderButton = () => {
+    if (!isEnded) {
+      return (
+        <div className="btn-container">
+          <button 
+            className="btn" 
+            onClick={endGame}
+          >
+            Check answers
+          </button>
+        </div>
+      )}
+    else {
+      return (
+        <div className="btn-container">
+          <button 
+            className="btn" 
+            onClick={restartGame}
+          >
+            Play again
+          </button>
+          <p className="result">You answered correctly {countCorrectAnswers()}/5 questions</p>
+        </div>
+      )}
+  }
 
   useEffect(() => {
     fetch('https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple')
@@ -72,14 +110,11 @@ const App = () => {
   }, [])
   console.log(questions)
 
-  const buttonText = isEnded ? "Play again" : "Check answers"
-  const buttonFunc = isEnded ? restartGame : endGame
-
   return (
     <main className="container">
       { !isStarted && <StartScreen handleClick={startGame} /> }
       { isStarted && questionElements }
-      { isStarted && <button className="btn" onClick={buttonFunc}>{ buttonText }</button> }
+      { isStarted && renderButton() }
     </main>
   )
 }
