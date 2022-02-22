@@ -18,14 +18,11 @@ const Question = ({
     const colorCorrect = (isCorrect && "rgba(200, 230, 130, .7)")
     const colorCorrectSelected = (isCorrect && isChecked && "rgba(130, 250, 130, .9)")
     const colorIncorrect = (!isCorrect && isChecked && "rgba(250, 150, 150, .7)")
-    console.log(ans)
-    console.log(correctAnswer)
 
     const styles = {
-      background: (colorIncorrect || colorCorrectSelected || colorCorrect),
+      background: (isEnded && (colorIncorrect || colorCorrectSelected || colorCorrect)),
     }
 
-    if (isCorrect) console.log(styles)
     return (
       <div key={uniqid()}>
         <input 
@@ -33,7 +30,7 @@ const Question = ({
           id={id} 
           name={name} 
           value={ans}
-          onChange={!isEnded && handleChange} 
+          onChange={handleChange} 
           checked={isChecked}
         />
         <label 

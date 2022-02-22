@@ -3,10 +3,12 @@ import uniqid from 'uniqid'
 import he from 'he' // decodes html entities like &#60;
 import StartScreen from './components/StartScreen'
 import Question from './components/Question'
+import EndgameButton from './components/EndgameButton'
 
 const App = () => {
   const [isStarted, setStart] = useState(true)
   const [isEnded, setEnd] = useState(false)
+  const [restartCount, setRestartCount] = useState(0)
   const [questions, setQuestions] = useState([])
   const [selectedAnswers, setSelectedAnswers] = useState({
     question0: "",
@@ -20,7 +22,10 @@ const App = () => {
 
   const endGame = () => { setEnd(true) }
 
-  const restartGame = () => { setEnd(false) }
+  const restartGame = () => { 
+    setEnd(false) 
+    setRestartCount(prevRestartCount => prevRestartCount + 1)
+  }
 
   const mixAnswers = (corrAnswer, incorrAnswers) => {
     const randomSpot = Math.floor(Math.random() * questions.length)
@@ -44,6 +49,7 @@ const App = () => {
     })}
 
   const handleAnswerSelection = (e) => {
+    if (isEnded) return
     const {name, value} = e.target
     setSelectedAnswers(prevSelectedAnswers => ({
       ...prevSelectedAnswers,
@@ -78,44 +84,23 @@ const App = () => {
     return correctAnswersCount
   }
 
-  const renderButton = () => {
-    if (!isEnded) {
-      return (
-        <div className="btn-container">
-          <button 
-            className="btn" 
-            onClick={endGame}
-          >
-            Check answers
-          </button>
-        </div>
-      )}
-    else {
-      return (
-        <div className="btn-container">
-          <p className="result">You answered correctly {countCorrectAnswers()}/5 questions</p>
-          <button 
-            className="btn" 
-            onClick={restartGame}
-          >
-            Play again
-          </button>
-        </div>
-      )}
-  }
-
   useEffect(() => {
     fetch('https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple')
       .then(res => res.json())
       .then(json => setQuestions(createQuestions(json.results)))
-  }, [])
-  console.log(questions)
+  }, [restartCount])
 
   return (
     <main className="container">
       { !isStarted && <StartScreen handleClick={startGame} /> }
       { isStarted && questionElements }
-      { isStarted && renderButton() }
+      { isStarted && 
+        <EndgameButton 
+          handleEndGame={endGame}
+          handleRestart={restartGame}
+          correctAnswers={countCorrectAnswers()}
+          isEnded={isEnded}
+        /> }
     </main>
   )
 }
