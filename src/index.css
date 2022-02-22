@@ -61,6 +61,7 @@ body {
 .answers label {
   padding: 6px 14px;
   border: 2px solid rgba(0, 0, 0, .25);
+  box-sizing: border-box;
   border-radius: 18px;
   min-width: max-content;
   cursor: pointer;
@@ -68,6 +69,6 @@ body {
 }
 
 .answers input:checked + label {
-  background: rgba(70, 150, 240, .55);
-  border: 2px solid rgba(0, 0, 0, .55);
+  background: rgb(90, 170, 250);
+  border: 2px solid rgb(90, 170, 250);
 }
