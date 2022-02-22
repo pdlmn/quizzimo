@@ -62,6 +62,7 @@ const App = () => {
         correctAnswer={correctAnswer}
         handleChange={handleAnswerSelection}
         selectedAnswer={selectedAnswers[name]}
+        isEnded={isEnded}
       />
   )})
 
